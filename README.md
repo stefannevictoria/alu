@@ -32,18 +32,19 @@ A ALU é o componente central de um processador, sendo ela que executa todos os 
 ```
 📁 ALU/
 ├── ALU.dig                  ← circuito principal com todas as operações
+├── divisor_8bits.dig        ← divisor Restoring Division
+├── multiplidor_8bits.dig    ← multiplicador array (produtos parciais)
+├── nand.dig                 ← porta lógica nand (8bits)
+├── passo_div.dig            ← um passo da divisão (subcircuito)
+├── README.md
+├── register_8bits.dig       ← registrador de 8 bits com flip-flops D
+├── shift.dig                ← shift lógico left/right
 ├── somador_1bit.dig         ← Full Adder de 1 bit (bloco base)
 ├── somador_8bits.dig        ← somador de 8 bits (8x Full Adder encadeados)
-├── subtrator_8bits.dig      ← subtrator usando complemento de 2
-├── multiplidor_8bits.dig    ← multiplicador array (produtos parciais)
+├── somador_16bits.dig       ← somador de 16 bits
 ├── somador_16bits.dig       ← somador de 16 bits (usado na multiplicação)
-├── divisor_8bits.dig        ← divisor Restoring Division
-├── passo_div.dig            ← um passo da divisão (subcircuito)
-├── shift.dig                ← shift lógico left/right
-├── register_8bits.dig       ← registrador de 8 bits com flip-flops D
-├── nand.dig                 ← porta lógica nand (8bits)
-├── xor.dig                  ← porta lógica nand (8bits)
-└── README.md
+├── subtrator_8bits.dig      ← subtrator usando complemento de 2
+└── xor.dig                  ← porta lógica nand (8bits)
 ```
 
 ---
@@ -57,7 +58,6 @@ A soma foi implementada a partir do zero, começando pelo **Full Adder de 1 bit*
 
 O **somador de 8 bits** encadeia 8 Full Adders, onde o Co de cada um entra como Cin do próximo.
 
----
 
 ### Subtração
 
@@ -67,15 +67,12 @@ O subtrator reutiliza o somador aplicando o **complemento de 2**. Para calcular 
 - O mesmo sinal SUB é conectado no **Cin do primeiro somador**, fornecendo o +1 do complemento de 2 sem nenhum circuito extra
 - Um **LED** conectado no bit 7 da saída acende quando o resultado é negativo, pois em complemento de 2 o MSB indica o sinal
 
----
 
 ### Multiplicação
 
-Implementada com o método **array multiplier** — equivalente à multiplicação manual em binário. Para cada bit de B, é calculado um Produto Parcial (PP) usando 8 portas AND com os bits de A. Os produtos parciais são somados em cascata com somadores de 16 bits, cada um deslocado pela posição correta.
+Implementada com o método **array multiplier**, equivalente à multiplicação manual em binário. Para cada bit de B, é calculado um Produto Parcial (PP) usando 8 portas AND com os bits de A. Os produtos parciais são somados em cascata com somadores de 16 bits, cada um deslocado pela posição correta.
 
-O deslocamento (shift) não é um componente — é feito pela própria conexão dos fios nas posições corretas. O resultado de 16 bits é dividido: bits 0-7 vão para o AC e bits 8-15 vão para o MQ.
-
----
+O deslocamento (shift) é feito pela própria conexão dos fios nas posições corretas. O resultado de 16 bits é dividido: bits 0-7 vão para o AC e bits 8-15 vão para o MQ.
 
 ### Divisão
 
@@ -88,18 +85,16 @@ Implementada com o algoritmo **Restoring Division**. O dividendo é processado b
 
 Um subcircuito `passo_div` encapsula toda essa lógica com um merger de shift, o subtrator, um MUX para restaurar, e uma porta NOT para gerar o bit do quociente. São encadeados 8 instâncias — uma por bit do dividendo. O resto final vai para AC e o quociente vai para MQ.
 
----
 
 ### Shift Lógico
 
-O shift não usa componente especial — é feita pela conexão de fios:
+O shift é feita pela conexão de fios:
 
 - **Shift left**: cada bit vai para a posição acima, bit 0 recebe constante 0, bit 7 é descartado
 - **Shift right**: cada bit vai para a posição abaixo, bit 7 recebe constante 0, bit 0 é descartado
 
 Um MUX controlado pela entrada DIR seleciona a direção: 0 para esquerda, 1 para direita.
 
----
 
 ### NAND e XOR
 
@@ -108,17 +103,15 @@ Operações lógicas diretas usando as portas de 8 bits do Digital:
 - **XOR**: retorna 1 quando os bits correspondentes de AC e N são diferentes
 - **NAND**: AND bit a bit de AC e N com o resultado invertido
 
----
 
 ### Registradores
 
 Os registradores AC e MQ foram implementados com **8 flip-flops D em paralelo**, todos compartilhando o mesmo clock. Sem clock, a saída Q mantém o valor anterior. Com um pulso de clock, captura o valor atual da entrada D. Esse subcircuito é importado duas vezes na ALU — um para AC e outro para MQ.
 
----
 
 ### ALU completa
 
-Todas as operações rodam em paralelo. Um **MUX de 8 entradas** para o AC e outro para o MQ selecionam qual resultado aparece na saída conforme o valor de SEL (3 bits). As saídas passam pelos registradores antes de sair — o resultado só é confirmado com um pulso de clock.
+Todas as operações rodam em paralelo. Um **MUX de 8 entradas** para o AC e outro para o MQ selecionam qual resultado aparece na saída conforme o valor de SEL (3 bits). As saídas passam pelos registradores antes de sair, e o resultado só é confirmado com um pulso de clock.
 
 ---
 
@@ -135,6 +128,6 @@ Todas as operações rodam em paralelo. Um **MUX de 8 entradas** para o AC e out
  
 ## Vídeo de apresentação
  
-[![Apresentação ALU 8 bits](https://img.youtube.com/vi/ghw8AQYY_y4.jpg)](https://youtu.be/ghw8AQYY_y4?si=wFfYLHRJwOej8AsK)
- 
+[![Vídeo da ponderada](https://img.youtube.com/vi/ghw8AQYY_y4/0.jpg)](https://www.youtube.com/watch?v=ghw8AQYY_y4)
+
 > Clique na imagem acima para assistir à apresentação completa da ALU.
