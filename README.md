@@ -130,3 +130,11 @@ Todas as operações rodam em paralelo. Um **MUX de 8 entradas** para o AC e out
 4. Clique em **Simulação → Iniciar**
 5. Defina os valores de **AC**, **N** e **SEL**
 6. Clique no **CLK** para confirmar o resultado nos registradores
+
+---
+ 
+## Vídeo de apresentação
+ 
+[![Apresentação ALU 8 bits](https://img.youtube.com/vi/SEU_ID_AQUI/0.jpg)](https://www.youtube.com/watch?v=SEU_ID_AQUI)
+ 
+> Clique na imagem acima para assistir à apresentação completa da ALU.
