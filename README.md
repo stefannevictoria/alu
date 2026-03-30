@@ -135,6 +135,6 @@ Todas as operações rodam em paralelo. Um **MUX de 8 entradas** para o AC e out
  
 ## Vídeo de apresentação
  
-[![Apresentação ALU 8 bits](https://img.youtube.com/vi/SEU_ID_AQUI/0.jpg)](https://www.youtube.com/watch?v=SEU_ID_AQUI)
+[![Apresentação ALU 8 bits](https://img.youtube.com/vi/ghw8AQYY_y4.jpg)](https://youtu.be/ghw8AQYY_y4?si=wFfYLHRJwOej8AsK)
  
 > Clique na imagem acima para assistir à apresentação completa da ALU.
