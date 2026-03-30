@@ -41,6 +41,8 @@ A ALU é o componente central de um processador, sendo ela que executa todos os 
 ├── passo_div.dig            ← um passo da divisão (subcircuito)
 ├── shift.dig                ← shift lógico left/right
 ├── register_8bits.dig       ← registrador de 8 bits com flip-flops D
+├── nand.dig                 ← porta lógica nand (8bits)
+├── xor.dig                  ← porta lógica nand (8bits)
 └── README.md
 ```
 
